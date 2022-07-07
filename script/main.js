@@ -25,12 +25,17 @@
 
 		let clickedThumb = this; // this is the element (thumbnail) we clicked on
 
-		// debugger;
-		// this will pause code execution on this line. like pushing pause on Netflix / Amazon Prime
-
 		// update the draggable piece's src attribute one at a time
 		pzlPieces.forEach((piece, index) => {
 			piece.src = `images/${imageNames[index] + clickedThumb.dataset.bgref}.jpg`;
+		});
+
+		pzlPieces.forEach(piece =>{
+				if (piece.parentElement = "puzzle-board"){
+					console.log(piece);
+
+					document.querySelector(".puzzle-pieces").appendChild(piece.parentNode.childNodes[0])
+				}
 		});
 	}
 
