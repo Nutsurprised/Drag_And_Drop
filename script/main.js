@@ -19,18 +19,23 @@
 	*/
 
 	const imageNames = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
-	
+
 	function changeImageSet() {
 		gameBoard.style.backgroundImage = `url(images/backGround${this.dataset.bgref}.jpg)`;
 
 		let clickedThumb = this; // this is the element (thumbnail) we clicked on
 
-		// debugger; 
-		// this will pause code execution on this line. like pushing pause on Netflix / Amazon Prime
-
 		// update the draggable piece's src attribute one at a time
 		pzlPieces.forEach((piece, index) => {
 			piece.src = `images/${imageNames[index] + clickedThumb.dataset.bgref}.jpg`;
+		});
+
+		pzlPieces.forEach(piece =>{
+				if (piece.parentElement = "puzzle-board"){
+					console.log(piece);
+
+					document.querySelector(".puzzle-pieces").appendChild(piece.parentNode.childNodes[0])
+				}
 		});
 	}
 
@@ -51,15 +56,22 @@
 		event.preventDefault();
 		let droppedElId = event.dataTransfer.getData('draggedEl');
 
-		// retrieve the dragged el by its ID, and then put it inside the current drop zone
-		this.appendChild(document.querySelector(`#${droppedElId}`));
-
+		// Checking if puzzle spot already contains a piece
+		if(event.currentTarget.childNodes.length != 1)
+		{
+			// retrieve the dragged el by its ID, and then put it inside the current drop zone
+			this.appendChild(document.querySelector(`#${droppedElId}`));
+		}
+		else
+		{
+			console.log('this spot already contains a puzzle piece');
+		}
 		// MDN JavaScript template string
 	}
 
 	// how to we want the user to interact with the elements that we collected earlier?
 	// events are things like clikcs, drags, double-clicks, keypresses... all the ways that a user can interact with a mouse, a keyboard etc
- 
+
 	theThumbnails.forEach(image => image.addEventListener('click', changeImageSet));
 	pzlPieces.forEach(piece => piece.addEventListener('dragstart', allowDrag));
 
